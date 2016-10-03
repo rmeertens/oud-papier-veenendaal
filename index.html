@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Search for up to 200 places with Radar Search</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+    <script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var map;
+      var infoWindow;
+      var service;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 52.027654, lng: 5.556510},
+          zoom: 13,
+          styles: [{
+            stylers: [{ visibility: 'simplified' }]
+          }, {
+            elementType: 'labels',
+            stylers: [{ visibility: 'off' }]
+          }]
+        });
+
+        infoWindow = new google.maps.InfoWindow();
+        service = new google.maps.places.PlacesService(map);
+
+        // The idle event is a debounced event, so we can query & listen without
+        // throwing too many requests at the server.
+        map.addListener('idle', performSearch);
+        
+      }
+        function searchList(the_list){
+            
+          for (var i = 0; i < the_list.length; i++) {
+//            // Iterate over numeric indexes from 0 to 5, as everyone expects.
+            var request = {
+                bounds: map.getBounds(),
+                keyword: the_list[i]
+            };
+        service.radarSearch(request, callback);
+}
+        }
+      function performSearch() {
+          combined = ["Bethelkerk Spanjaarsgoed 7",
+"CBS De Burcht M. Turnorlaan 5",
+"CBS De Grondtoon Componistensingel 26",
+"CBS De Schakel Langelaar 24",
+"CBS Het Baken I t Kofschip 2",
+"CBS Het Baken II De Reede 71",
+"CBS Het Erf Ronde Erf 2-4",
+"Christelijk Gereformeerd Pniëlkoor Achterberg",
+"Christelijke Basisschool Tamim Van Esssenlaan 8",
+"De Goede Reede parkeerterrein station West",
+"De Hoeksteen De Grote Pekken 2",
+"De Schutse stationsstraat 81",
+"De Ster Huzarenpad 1",
+"Dr. C. Steenblokschool Zoete Inval 10",
+"G.V.V.V. Verlengde Sportlaan 2",
+"Hersteld Hervormde gemeente Kerkewijk 18",
+"Hersteld Hervormde gemeente Dijkstraat 59",
+"Hervormde Sionskerk A. van Ostadelaan 78",
+"Interieurfons Sola Fide Eikenlaan 3",
+"Islamitische Stichting Nederland Pollux 2",
+"Johannes Calvijnschool Duivenwal-West 301",
+"Johannes Calvijnschool Geerseweg 2",
+"Juliana van Stolbergschool Vendelseweg 30",
+"Juliana van Stolbergschool Gerard Terborchstraat 21",
+"Juliana van Stolbergschool Sterke Arm 2a",
+"Julianakerk Prins Bernhardlaan 26",
+"KBS de Vuurvlinder Stormzwaluw 25",
+"KBS de Vuurvlinder Boerenzwaluw 19",
+"Korfbalvereniging SKF Wageningselaan 1",
+"Les Sabots Wageningselaan 3A",
+"MAC Veenendaal Groeneveldselaan 7",
+"Oranjeschelp David Tenierslaan 8",
+"Oude Kerk Markt 9b",
+"Ouderraad WereldKidz Mozaiek De Bongerd 3",
+"Poolster/ Morgenster  Poolster/ Morgenster (fietsenberging)",
+"Petrakerk-Trefpunt Kerkewijk 135",
+"Pnielkerk Ghandistraat 2",
+"Prinses Beatrixschool PWA park 602",
+"Reinaerde Slagvink 25",
+"Ritmeester-Veenzangers Mannenkoor Vijftien Morgen 4",
+"Rode Kruis Sterke Arm 10",
+"S.V. Unitas '48 Verlengde Sportlaan 3",
+"School Alex PWA park 600",
+"Scoutinggroep De Zwervers Zandheuvelweg 2a",
+"Stichting De Babbelbox Gerstveld 59",
+"Stichting Rembrandt College Rembrandtlaan 2",
+"Toertocht Veenendaal Zandstraat 151",
+"V.H.C. Blue Socks Spitsbergenweg 2",
+"V.M.H.C. Spitsbergen Groeneveldselaan 9",
+"V.V. Dovo Verlengde Sportlaan 5",
+"voetbalvereniging V.R.C. Spitsbergenweg 52",
+"Voetbalvereniging Veenendaal Groeneveldselaan 15",
+"Vredeskerk Kerkewijk 125",
+"WereldKidz Achtbaan Appelvink 1",
+"Westerkerk Goudvink 2",
+"Wijkgemeenschap Duivenwal Vaarthof, Vaarstede en Vaartzicht",
+"Woonvereniging De Weverij papierhok Weverij"];
+          
+          only_address = ["Spanjaarsgoed 7",
+"M. Turnorlaan 5",
+"Componistensingel 26",
+"Langelaar 24",
+"t Kofschip 2",
+"De Reede 71",
+"Ronde Erf 2-4",
+"Achterberg",
+"Van Esssenlaan 8",
+"parkeerterrein station West",
+"De Grote Pekken 2",
+"stationsstraat 81",
+"Huzarenpad 1",
+"Zoete Inval 10",
+"Verlengde Sportlaan 2",
+"Kerkewijk 18",
+"Dijkstraat 59",
+"A. van Ostadelaan 78",
+"Eikenlaan 3",
+"Pollux 2",
+"Duivenwal-West 301",
+"Geerseweg 2",
+"Vendelseweg 30",
+"Gerard Terborchstraat 21",
+"Sterke Arm 2a",
+"Prins Bernhardlaan 26",
+"Stormzwaluw 25",
+"Boerenzwaluw 19",
+"Wageningselaan 1",
+"Wageningselaan 3A",
+"Groeneveldselaan 7",
+"David Tenierslaan 8",
+"Markt 9b",
+"De Bongerd 3",
+"Poolster/ Morgenster (fietsenberging)",
+"Kerkewijk 135",
+"Ghandistraat 2",
+"PWA park 602",
+"Slagvink 25",
+"Vijftien Morgen 4",
+"Sterke Arm 10",
+"Verlengde Sportlaan 3",
+"PWA park 600",
+"Zandheuvelweg 2a",
+"Gerstveld 59",
+"Rembrandtlaan 2",
+"Zandstraat 151",
+"Spitsbergenweg 2",
+"Groeneveldselaan 9",
+"Verlengde Sportlaan 5",
+"Spitsbergenweg 52",
+"Groeneveldselaan 15",
+"Kerkewijk 125",
+"Appelvink 1",
+"Goudvink 2",
+"Vaarthof, Vaarstede en Vaartzicht",
+"papierhok Weverij"]
+          searchList(combined);
+          searchList(only_address);
+        
+      }
+
+      function callback(results, status) {
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+          console.error(status);
+          return;
+        }
+          if(results.length > 0){
+            addMarker(results[0]);
+          }
+////        for (var i = 0, result; result = results[i]; i++) {
+//          addMarker(result);
+//        }
+      }
+
+      function addMarker(place) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          icon: {
+            url: 'http://maps.gstatic.com/mapfiles/circle.png',
+            anchor: new google.maps.Point(10, 10),
+            scaledSize: new google.maps.Size(10, 17)
+          }
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          service.getDetails(place, function(result, status) {
+            if (status !== google.maps.places.PlacesServiceStatus.OK) {
+              console.error(status);
+              return;
+            }
+            infoWindow.setContent(result.name);
+            infoWindow.open(map, marker);
+          });
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQ2QLNWb_CaxqlcjIVEOKegxGc_BaYc9Q &callback=initMap&libraries=places,visualization" async defer></script>
+  </body>
+</html>
