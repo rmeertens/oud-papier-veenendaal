@@ -19,12 +19,63 @@
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
       var map;
-      var infoWindow;
+      var inf_window;
       var service;
-
+        var i;
+var infoWindowThings={};
+var somethingSomethings=[]
+// Got this list using my awesome python script. 
+var locs = [{lat:52.0357113,lng:5.5310071,desc:'CBS De Grondtoon Componistensingel 26'},
+{lat:52.0331348,lng:5.5365003,desc:'CBS De Schakel Langelaar 24'},
+{lat:52.0232085,lng:5.5344423,desc:'CBS Het Baken I t Kofschip 2'},
+{lat:52.0265432,lng:5.5314489,desc:'CBS Het Baken II De Reede 71'},
+{lat:52.0318427,lng:5.570029,desc:'CBS Het Erf Ronde Erf 2-4'},
+{lat:52.028648,lng:5.5227251,desc:'Christelijk Gereformeerd Pniëlkoor Achterberg'},
+{lat:52.0223583,lng:5.5823461,desc:'Christelijke Basisschool Tamim Van Esssenlaan 8'},
+{lat:52.018596,lng:5.5560769,desc:'De Hoeksteen De Grote Pekken 2'},
+{lat:52.0357098,lng:5.5646601,desc:'De Schutse stationsstraat 81'},
+{lat:52.0259467,lng:5.5748373,desc:'De Ster Huzarenpad 1'},
+{lat:52.0295598,lng:5.5634137,desc:'Dr. C. Steenblokschool Zoete Inval 10'},
+{lat:52.0288641,lng:5.5398446,desc:'G.V.V.V. Verlengde Sportlaan 2'},
+{lat:52.0232322,lng:5.55240815465224,desc:'Hersteld Hervormde gemeente Kerkewijk 18'},
+{lat:52.0191249,lng:5.5364597,desc:'Hersteld Hervormde gemeente Dijkstraat 59'},
+{lat:52.0228927,lng:5.5491608,desc:'Interieurfons Sola Fide Eikenlaan 3'},
+{lat:52.0258718,lng:5.5669555,desc:'Islamitische Stichting Nederland Pollux 2'},
+{lat:52.0254849,lng:5.5460465,desc:'Johannes Calvijnschool Duivenwal-West 301'},
+{lat:52.0266704,lng:5.5461231,desc:'Johannes Calvijnschool Geerseweg 2'},
+{lat:52.0335197,lng:5.5520528,desc:'Juliana van Stolbergschool Vendelseweg 30'},
+{lat:52.019981,lng:5.5402995,desc:'Juliana van Stolbergschool Gerard Terborchstraat 21'},
+{lat:52.0293791,lng:5.5607266,desc:'Julianakerk Prins Bernhardlaan 26'},
+{lat:52.029448,lng:5.535611,desc:'KBS de Vuurvlinder Stormzwaluw 25'},
+{lat:52.0299164,lng:5.5358033,desc:'KBS de Vuurvlinder Boerenzwaluw 19'},
+{lat:52.0158234,lng:5.565427,desc:'Korfbalvereniging SKF Wageningselaan 1'},
+{lat:52.0147983,lng:5.5651468,desc:'Les Sabots Wageningselaan 3A'},
+{lat:52.0197818,lng:5.567568,desc:'MAC Veenendaal Groeneveldselaan 7'},
+{lat:52.0243894,lng:5.5415293,desc:'Oranjeschelp David Tenierslaan 8'},
+{lat:52.0259501,lng:5.55342305640759,desc:'Oude Kerk Markt 9b'},
+{lat:52.0206691,lng:5.5605121,desc:'Ouderraad WereldKidz Mozaiek De Bongerd 3'},
+{lat:52.0145238,lng:5.54669050963283,desc:'Petrakerk-Trefpunt Kerkewijk 135'},
+{lat:52.02178035,lng:5.57093866267668,desc:'Pnielkerk Ghandistraat 2'},
+{lat:52.0289485,lng:5.5300022,desc:'Reinaerde Slagvink 25'},
+{lat:52.0210244,lng:5.553792,desc:'Ritmeester-Veenzangers Mannenkoor Vijftien Morgen 4'},
+{lat:52.0222501,lng:5.5558373,desc:'Rode Kruis Sterke Arm 10'},
+{lat:52.0281549,lng:5.5395348,desc:'S.V. Unitas 48 Verlengde Sportlaan 3'},
+{lat:52.0153664,lng:5.5360893,desc:'Scoutinggroep De Zwervers Zandheuvelweg 2a'},
+{lat:52.0212312,lng:5.5468277,desc:'Stichting Rembrandt College Rembrandtlaan 2'},
+{lat:52.0294823,lng:5.5492246,desc:'Toertocht Veenendaal Zandstraat 151'},
+{lat:52.0272345,lng:5.5778192,desc:'V.H.C. Blue Socks Spitsbergenweg 2'},
+{lat:52.018862,lng:5.5677269,desc:'V.M.H.C. Spitsbergen Groeneveldselaan 9'},
+{lat:52.0282508,lng:5.5386642,desc:'V.V. Dovo Verlengde Sportlaan 5'},
+{lat:52.0284365,lng:5.57544,desc:'voetbalvereniging V.R.C. Spitsbergenweg 52'},
+{lat:52.0182834,lng:5.5703023,desc:'Voetbalvereniging Veenendaal Groeneveldselaan 15'},
+{lat:52.0152708,lng:5.54753009880953,desc:'Vredeskerk Kerkewijk 125'},
+{lat:52.0313127,lng:5.5293351,desc:'WereldKidz Achtbaan Appelvink 1'},
+{lat:52.0299416,lng:5.5322231,desc:'Westerkerk Goudvink 2'}]
       function initMap() {
+          
+          inf_window=new google.maps.InfoWindow();
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 52.027654, lng: 5.556510},
+          center: {lat: 52.0357113, lng: 5.5310071},
           zoom: 13,
           styles: [{
             stylers: [{ visibility: 'simplified' }]
@@ -34,159 +85,34 @@
           }]
         });
 
-        infoWindow = new google.maps.InfoWindow();
+        
         service = new google.maps.places.PlacesService(map);
 
-        // The idle event is a debounced event, so we can query & listen without
-        // throwing too many requests at the server.
-        map.addListener('idle', performSearch);
-        
-      }
-        function searchList(the_list){
+          // We create one infowindow, and fill and show it each time we click a marker
+        for(i=0;i<locs.length;i++){
             
-          for (var i = 0; i < the_list.length; i++) {
-//            // Iterate over numeric indexes from 0 to 5, as everyone expects.
-            var request = {
-                bounds: map.getBounds(),
-                keyword: the_list[i]
-            };
-        service.radarSearch(request, callback);
-}
+              var marker = new google.maps.Marker({
+                  position: new google.maps.LatLng(locs[i].lat,locs[i].lng),
+                  map: map,
+                  title:locs[i].desc
+              });
+            
+              
+              google.maps.event.addListener(marker, 'click', function() {
+                  // Title is the same as the title of the marker!
+                 inf_window.setContent(this.title);
+                 inf_window.open(map, this);
+          });
+            
         }
-      function performSearch() {
-          combined = ["Bethelkerk Spanjaarsgoed 7",
-"CBS De Burcht M. Turnorlaan 5",
-"CBS De Grondtoon Componistensingel 26",
-"CBS De Schakel Langelaar 24",
-"CBS Het Baken I t Kofschip 2",
-"CBS Het Baken II De Reede 71",
-"CBS Het Erf Ronde Erf 2-4",
-"Christelijk Gereformeerd Pniëlkoor Achterberg",
-"Christelijke Basisschool Tamim Van Esssenlaan 8",
-"De Goede Reede parkeerterrein station West",
-"De Hoeksteen De Grote Pekken 2",
-"De Schutse stationsstraat 81",
-"De Ster Huzarenpad 1",
-"Dr. C. Steenblokschool Zoete Inval 10",
-"G.V.V.V. Verlengde Sportlaan 2",
-"Hersteld Hervormde gemeente Kerkewijk 18",
-"Hersteld Hervormde gemeente Dijkstraat 59",
-"Hervormde Sionskerk A. van Ostadelaan 78",
-"Interieurfons Sola Fide Eikenlaan 3",
-"Islamitische Stichting Nederland Pollux 2",
-"Johannes Calvijnschool Duivenwal-West 301",
-"Johannes Calvijnschool Geerseweg 2",
-"Juliana van Stolbergschool Vendelseweg 30",
-"Juliana van Stolbergschool Gerard Terborchstraat 21",
-"Juliana van Stolbergschool Sterke Arm 2a",
-"Julianakerk Prins Bernhardlaan 26",
-"KBS de Vuurvlinder Stormzwaluw 25",
-"KBS de Vuurvlinder Boerenzwaluw 19",
-"Korfbalvereniging SKF Wageningselaan 1",
-"Les Sabots Wageningselaan 3A",
-"MAC Veenendaal Groeneveldselaan 7",
-"Oranjeschelp David Tenierslaan 8",
-"Oude Kerk Markt 9b",
-"Ouderraad WereldKidz Mozaiek De Bongerd 3",
-"Poolster/ Morgenster  Poolster/ Morgenster (fietsenberging)",
-"Petrakerk-Trefpunt Kerkewijk 135",
-"Pnielkerk Ghandistraat 2",
-"Prinses Beatrixschool PWA park 602",
-"Reinaerde Slagvink 25",
-"Ritmeester-Veenzangers Mannenkoor Vijftien Morgen 4",
-"Rode Kruis Sterke Arm 10",
-"S.V. Unitas '48 Verlengde Sportlaan 3",
-"School Alex PWA park 600",
-"Scoutinggroep De Zwervers Zandheuvelweg 2a",
-"Stichting De Babbelbox Gerstveld 59",
-"Stichting Rembrandt College Rembrandtlaan 2",
-"Toertocht Veenendaal Zandstraat 151",
-"V.H.C. Blue Socks Spitsbergenweg 2",
-"V.M.H.C. Spitsbergen Groeneveldselaan 9",
-"V.V. Dovo Verlengde Sportlaan 5",
-"voetbalvereniging V.R.C. Spitsbergenweg 52",
-"Voetbalvereniging Veenendaal Groeneveldselaan 15",
-"Vredeskerk Kerkewijk 125",
-"WereldKidz Achtbaan Appelvink 1",
-"Westerkerk Goudvink 2",
-"Wijkgemeenschap Duivenwal Vaarthof, Vaarstede en Vaartzicht",
-"Woonvereniging De Weverij papierhok Weverij"];
-          
-          only_address = ["Spanjaarsgoed 7",
-"M. Turnorlaan 5",
-"Componistensingel 26",
-"Langelaar 24",
-"t Kofschip 2",
-"De Reede 71",
-"Ronde Erf 2-4",
-"Achterberg",
-"Van Esssenlaan 8",
-"parkeerterrein station West",
-"De Grote Pekken 2",
-"stationsstraat 81",
-"Huzarenpad 1",
-"Zoete Inval 10",
-"Verlengde Sportlaan 2",
-"Kerkewijk 18",
-"Dijkstraat 59",
-"A. van Ostadelaan 78",
-"Eikenlaan 3",
-"Pollux 2",
-"Duivenwal-West 301",
-"Geerseweg 2",
-"Vendelseweg 30",
-"Gerard Terborchstraat 21",
-"Sterke Arm 2a",
-"Prins Bernhardlaan 26",
-"Stormzwaluw 25",
-"Boerenzwaluw 19",
-"Wageningselaan 1",
-"Wageningselaan 3A",
-"Groeneveldselaan 7",
-"David Tenierslaan 8",
-"Markt 9b",
-"De Bongerd 3",
-"Poolster/ Morgenster (fietsenberging)",
-"Kerkewijk 135",
-"Ghandistraat 2",
-"PWA park 602",
-"Slagvink 25",
-"Vijftien Morgen 4",
-"Sterke Arm 10",
-"Verlengde Sportlaan 3",
-"PWA park 600",
-"Zandheuvelweg 2a",
-"Gerstveld 59",
-"Rembrandtlaan 2",
-"Zandstraat 151",
-"Spitsbergenweg 2",
-"Groeneveldselaan 9",
-"Verlengde Sportlaan 5",
-"Spitsbergenweg 52",
-"Groeneveldselaan 15",
-"Kerkewijk 125",
-"Appelvink 1",
-"Goudvink 2",
-"Vaarthof, Vaarstede en Vaartzicht",
-"papierhok Weverij"]
-          searchList(combined);
-          searchList(only_address)
+      }
+       
         
+      function performSearch() {
+       
       }
 
-      function callback(results, status) {
-        if (status !== google.maps.places.PlacesServiceStatus.OK) {
-          console.error(status);
-          return;
-        }
-          if(results.length > 0){
-            addMarker(results[0]);
-          }
-////        for (var i = 0, result; result = results[i]; i++) {
-//          addMarker(result);
-//        }
-      }
-
+   
       function addMarker(place) {
         var marker = new google.maps.Marker({
           map: map,
